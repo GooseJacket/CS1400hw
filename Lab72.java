@@ -3,9 +3,9 @@ import java.util.Scanner;
 public class Lab72 {
    public static void main(String[] args) {
       //set-up
-      Scanner scnr = new Scanner(System.in);
-      double[] costList = {}; String costListString = "";
-      String[] nameList = {}; String nameListString = "";
+      Scanner scnr = new Scanner(System.in); int length = 0;
+      double[] costList = new double[100];
+      String[] nameList = new String[100];
       
       //intro
       System.out.println("Welcome! When inputting costs please put them in normal format but without the dollar sign.");
@@ -19,34 +19,26 @@ public class Lab72 {
          input = scnr.nextLine();
          
          if(input.equals("")){break;} //exit
+         if(!scnr.hasNext()){break;}
          
-         nameListString += input + "SPLITHERE"; //make one long string
+         nameList[length] = input;
          
          //Cost
          System.out.print("\nPlease provide the cost of the expense: ");
-         input = scnr.nextLine();
-         costListString += input + "SPLITHERE"; //make one long string
+         costList[length] = Double.parseDouble(scnr.nextLine());
+         length += 1;
+         if(length == 100){break;}
       }
       
       System.out.println(); //formatting
       
-      nameList = nameListString.split("SPLITHERE"); //string --> array (because i don't know how many items the user has!)
-      
-      String[] tempList = costListString.split("SPLITHERE"); //string --> array
-      
-      //String[] --> double[]
-      costList = new double[tempList.length]; 
-      for(int i = 0; i < tempList.length; i++){ 
-         costList[i] = Double.parseDouble(tempList[i]);
-      }
-      
       //formatting (basically ensure the dollar signs align)
       int size = 0;
-      for(String s : nameList){
+      for(int i = 0; i < length; i++){String s = nameList[i];
          if(s.length() > size){size = s.length();}
       }      
       
-      for(int i = 0; i < costList.length; i++){
+      for(int i = 0; i < length; i++){
          System.out.print(nameList[i]); //print name
          
          //formatting

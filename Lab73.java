@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class LabProgram {
+public class Lab73 {
    //method printOut for printing each line; name, cost, size = padding for formatting, writeSign = for (sub)totals
    public static void printOut(String name, double cost, int size, boolean writeSign){
       System.out.print(name); //print name

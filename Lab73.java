@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class LabProgram {
-   //method printOut for printing each line; name, cost, size = padding for formatting, writeSign = for subtotals
+   //method printOut for printing each line; name, cost, size = padding for formatting, writeSign = for (sub)totals
    public static void printOut(String name, double cost, int size, boolean writeSign){
       System.out.print(name); //print name
          
@@ -13,11 +13,10 @@ public class LabProgram {
       
       //print cost
       System.out.print("$ ");
-      if(cost < 0){ System.out.print("(");} else{System.out.print(" ");}
-      if(writeSign){System.out.printf("%8.2f", cost);}
-      else{System.out.printf("%8.2f", Math.abs(cost)); 
-      }
-      if(cost < 0){ System.out.println(")");} else{System.out.println();}
+      if(cost < 0){System.out.print("(");}  else{System.out.print(" ");}//Parentheses for negative numbers
+      if(writeSign){System.out.printf("%8.2f", cost);} //Negative sign for (sub)totals
+      else{System.out.printf("%8.2f", Math.abs(cost));} //print real cost
+      if(cost < 0){System.out.println(")");} else{System.out.println();}//Parentheses for negative numbers
    }
    
    
@@ -46,16 +45,16 @@ public class LabProgram {
          //Cost
          System.out.print("\nPlease provide the cost of the expense: ");
          try{cost = Double.parseDouble(scnr.nextLine());}
-         catch(Exception e){
+         catch(Exception e){ //retry
             try{
                System.out.print("\nHey, that didn't make sense. Try the cost again?");
                cost = Double.parseDouble(scnr.nextLine());
             }
-            catch(Exception f){ 
+            catch(Exception f){
                System.out.print("\nI really don't understand so I'm going to move on.");
                madeSense = false;
          }  }
-         if(madeSense){
+         if(madeSense){ //add info to arrays
             nameList[index] = name;
             costList[index] = cost;
             index += 1;
@@ -63,7 +62,6 @@ public class LabProgram {
          }
          if(length == 100){break;}
       }
-      
       System.out.println("\n"); //formatting
       
       //formatting (basically ensure the dollar signs align)
@@ -71,25 +69,25 @@ public class LabProgram {
       for(int i = 0; i < length; i++){String s = nameList[i];
          if(s.length() > size){size = s.length();}
       }      
-      
+
+      //INCOME
       double income = 0.0; System.out.println("Income:"); //setup income
       for(int i = 0; i < length; i++){if(costList[i] >= 0){
          income += costList[i];
-         
          printOut(nameList[i], costList[i], size, false); //see top of page
-         
       }}
       printOut("Subtotal:", income, size, true);
-      
       System.out.println(); //formatting
+
+      //EXPENSES
       double expenses = 0.0; System.out.println("Expenses:"); //setup expenses
-      
       for(int i = 0; i < length; i++){if(costList[i] < 0){
          expenses += costList[i];
-         
          printOut(nameList[i], costList[i], size, false); //see top of page
       }}
       printOut("Subtotal:", expenses, size, true);
+
+      //TOTAL
       System.out.println();
       printOut("Total:", income + expenses, size, true);
    }
